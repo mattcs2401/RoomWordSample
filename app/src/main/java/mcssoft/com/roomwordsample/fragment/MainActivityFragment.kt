@@ -1,10 +1,7 @@
-package mcssoft.com.roomwordsample
+package mcssoft.com.roomwordsample.fragment
 
-import android.app.Activity
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +11,7 @@ import mcssoft.com.roomwordsample.entity.Word
 import mcssoft.com.roomwordsample.model.WordViewModel
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import mcssoft.com.roomwordsample.R
 import mcssoft.com.roomwordsample.adapter.WordListAdaptor
 
 
