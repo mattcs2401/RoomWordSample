@@ -2,6 +2,7 @@ package mcssoft.com.roomwordsample.fragment
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,12 +14,19 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import mcssoft.com.roomwordsample.R
 import mcssoft.com.roomwordsample.adapter.WordListAdaptor
+import android.widget.Toast
+import android.R.attr.data
+import android.app.Activity.RESULT_OK
+import kotlinx.android.synthetic.main.content_new.*
+import mcssoft.com.roomwordsample.activity.NewActivity
 
 
 class MainActivityFragment : Fragment() {
 
     lateinit private var rootView: View
     lateinit private var wordViewModel: WordViewModel
+
+    val NEW_WORD_ACTIVITY_REQUEST_CODE = 1
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -43,4 +51,19 @@ class MainActivityFragment : Fragment() {
             }
         })
     }
+
+    /*** this is no good here, has to be in activity or via interface ***/
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (requestCode === NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode === RESULT_OK) {
+//            val word = Word(data!!.getStringExtra("com.example.android.wordlistsql.REPLY"))
+//            wordViewModel.insert(word)
+//        } else {
+//            Toast.makeText(
+//                    activity!!.getApplicationContext(),
+//                    R.string.empty_not_saved,
+//                    Toast.LENGTH_LONG).show()
+//        }
+//    }
 }
