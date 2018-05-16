@@ -19,6 +19,7 @@ import android.R.attr.data
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.util.Log
 import kotlinx.android.synthetic.main.content_new.*
 import mcssoft.com.roomwordsample.activity.NewActivity
 import mcssoft.com.roomwordsample.interfaces.IMainActivity
@@ -29,6 +30,7 @@ class MainActivityFragment : Fragment() {
     lateinit private var rootView: View
     lateinit private var wordViewModel: WordViewModel
     lateinit private var iMainActivity: IMainActivity
+    lateinit private var adapter: WordListAdaptor
 
     val NEW_WORD_ACTIVITY_REQUEST_CODE = 1
 
@@ -49,13 +51,20 @@ class MainActivityFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+//        Log.d("MainActivityFragment", "onActivityCreated")
 
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.id_rv_wordListing)
-        val adapter = WordListAdaptor(activity!!.getApplicationContext())
+        adapter = WordListAdaptor(activity!!.getApplicationContext())
         recyclerView.setAdapter(adapter)
         recyclerView.setLayoutManager(LinearLayoutManager(activity))
 
         wordViewModel = ViewModelProviders.of(this).get(WordViewModel::class.java)
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+//        Log.d("MainActivityFragment", "onStart")
 
         var word = iMainActivity.getWord()
         if(word != null) {
