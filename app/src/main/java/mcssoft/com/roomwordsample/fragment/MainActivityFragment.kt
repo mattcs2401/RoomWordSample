@@ -16,17 +16,30 @@ import mcssoft.com.roomwordsample.R
 import mcssoft.com.roomwordsample.adapter.WordListAdaptor
 import android.widget.Toast
 import android.R.attr.data
+import android.app.Activity
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import kotlinx.android.synthetic.main.content_new.*
 import mcssoft.com.roomwordsample.activity.NewActivity
+import mcssoft.com.roomwordsample.interfaces.IMainActivity
 
 
 class MainActivityFragment : Fragment() {
 
     lateinit private var rootView: View
     lateinit private var wordViewModel: WordViewModel
+    lateinit private var iMainActivity: IMainActivity
 
     val NEW_WORD_ACTIVITY_REQUEST_CODE = 1
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is IMainActivity) {
+            iMainActivity = context
+        } else {
+            throw ClassCastException(context.toString() + " must implement IMainActivity.")
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -43,6 +56,11 @@ class MainActivityFragment : Fragment() {
         recyclerView.setLayoutManager(LinearLayoutManager(activity))
 
         wordViewModel = ViewModelProviders.of(this).get(WordViewModel::class.java)
+
+        var word = iMainActivity.getWord()
+        if(word != null) {
+            wordViewModel.insert(word)
+        }
 
         wordViewModel.getAllWords().observe(this, Observer<List<Word>> { words ->
             // Update the cached copy of the words in the adapter.

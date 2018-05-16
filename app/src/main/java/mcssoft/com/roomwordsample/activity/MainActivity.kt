@@ -12,14 +12,17 @@ import mcssoft.com.roomwordsample.R
 import mcssoft.com.roomwordsample.model.WordViewModel
 import android.content.Intent
 import android.widget.Toast
+import mcssoft.com.roomwordsample.R.id.toolbar
 import mcssoft.com.roomwordsample.entity.Word
+import mcssoft.com.roomwordsample.interfaces.IMainActivity
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IMainActivity {
 
 //    lateinit private var wordViewModel: WordViewModel
 
     val NEW_WORD_ACTIVITY_REQUEST_CODE = 1
+    private var word: Word? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +51,11 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode === NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode === Activity.RESULT_OK) {
-            val word = Word(data!!.getStringExtra("com.example.android.wordlistsql.REPLY"))
+            word = Word(data!!.getStringExtra("com.example.android.wordlistsql.REPLY"))
 //            wordViewModel.insert(word)
             val bp = ""
         } else {
+            word = null
             Toast.makeText(getApplicationContext(), R.string.empty_not_saved, Toast.LENGTH_LONG)
                  .show()
         }
@@ -68,5 +72,9 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun getWord(): Word? {
+        return word
     }
 }
