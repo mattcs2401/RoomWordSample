@@ -50,22 +50,4 @@ class NewActivityFragment : Fragment() {
         })
     }
 
-    //    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        activity.setContentView(R.layout.activity_new_word)
-//        editWordView = findViewById(R.id.edit_word)
-//
-//        val button = findViewById(R.id.button_save)
-//        button.setOnClickListener(View.OnClickListener {
-//            val replyIntent = Intent()
-//            if (TextUtils.isEmpty(editWordView.getText())) {
-//                setResult(RESULT_CANCELED, replyIntent)
-//            } else {
-//                val word = mEditWordView.getText().toString()
-//                replyIntent.putExtra(EXTRA_REPLY, word)
-//                setResult(RESULT_OK, replyIntent)
-//            }
-//            finish()
-//        })
-//    }
 }

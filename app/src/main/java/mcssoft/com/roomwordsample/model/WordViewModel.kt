@@ -16,8 +16,6 @@ class WordViewModel(application: Application) : AndroidViewModel(application) {
         allWords = wordRepository.getAllWords()
     }
 
-    //internal val allWords: LiveData<List<Word>> = wordRepository.getAllWords()
-
     internal fun getAllWords(): LiveData<List<Word>> {
         return wordRepository.getAllWords()
     }

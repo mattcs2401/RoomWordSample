@@ -7,9 +7,8 @@ import mcssoft.com.roomwordsample.database.WordRoomDatabase
 import mcssoft.com.roomwordsample.entity.Word
 import android.os.AsyncTask
 
-
-
 class WordRepository(application: Application) {
+
     private val wordDao: WordDAO
 
     init {
@@ -32,7 +31,5 @@ class WordRepository(application: Application) {
             return null
         }
     }
-    //val db: WordRoomDatabase
-    //private val wordDao: WordDAO
 
 }

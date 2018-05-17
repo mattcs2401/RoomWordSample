@@ -29,22 +29,10 @@ class MainActivity : AppCompatActivity(), IMainActivity {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null)
-//                    .show()
-//        }
-
         fab.setOnClickListener() {
             val intent = Intent(this@MainActivity, NewActivity::class.java)
             startActivityForResult(intent, 1)
         }
-
-//        val mainActivityFragment = Fragment()
-//        var fragTrans = fragmentManager.beginTransaction()
-//        fragTrans.replace(R.id.fragment, mainActivityFragment)
-//        fragTrans.addToBackStack(null)
-//        fragTrans.commit()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -52,14 +40,11 @@ class MainActivity : AppCompatActivity(), IMainActivity {
 
         if (requestCode === NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode === Activity.RESULT_OK) {
             word = Word(data!!.getStringExtra("com.example.android.wordlistsql.REPLY"))
-//            wordViewModel.insert(word)
-            val bp = ""
         } else {
             word = null
             Toast.makeText(getApplicationContext(), R.string.empty_not_saved, Toast.LENGTH_LONG)
                  .show()
         }
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
