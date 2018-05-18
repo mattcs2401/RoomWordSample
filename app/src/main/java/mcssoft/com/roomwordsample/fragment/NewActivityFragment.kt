@@ -9,10 +9,12 @@ import android.widget.EditText
 import mcssoft.com.roomwordsample.R
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.text.TextUtils
 import android.content.Intent
+import android.view.ViewGroup.inflate
 import android.widget.Button
-
+import kotlinx.android.synthetic.main.fragment_new.*
 
 class NewActivityFragment : Fragment() {
 
@@ -25,11 +27,10 @@ class NewActivityFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        rootView = inflater.inflate(R.layout.fragment_new, container, false)
-
-        editWordView = rootView.findViewById(R.id.edit_word)
+        rootView =  inflater.inflate(R.layout.fragment_new, container, false)
 
         button = rootView.findViewById<Button>(R.id.button_save)
+        editWordView = rootView.findViewById(R.id.edit_word)
 
         return rootView
     }
