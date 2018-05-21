@@ -10,6 +10,12 @@ import android.os.AsyncTask.execute
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.support.annotation.NonNull
 import android.os.AsyncTask
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
+import androidx.work.Worker
+import androidx.work.ktx.OneTimeWorkRequestBuilder
+import mcssoft.com.roomwordsample.background.WordWorker
 
 @Database(entities = arrayOf(Word::class), version = 1, exportSchema = false)
 abstract class WordRoomDatabase : RoomDatabase() {
@@ -38,9 +44,29 @@ abstract class WordRoomDatabase : RoomDatabase() {
                 super.onOpen(db)
                 // If you want to keep the data through app restarts,
                 // comment out the following line.
-                PopulateDbAsync(INSTANCE).execute()
+//                PopulateDbAsync(INSTANCE).execute()
+                PopulateDB(INSTANCE)
             }
         }
+    }
+
+    private class PopulateDB(db: WordRoomDatabase?) {
+
+        lateinit private var mDao: WordDAO
+
+        init {
+            if(db != null) {
+                mDao = db.wordDao()
+            }
+        }
+
+//        companion object {
+        val wordWorker : WordWorker = WordWorker(mDao)
+            val request: OneTimeWorkRequest = OneTimeWorkRequest.Builder(WordWorker::class.java).build()
+        val workMgr : WorkManager = WorkManager.getInstance()
+            val x: Unit = workMgr.enqueue(request)
+//        }
+
     }
 
     private class PopulateDbAsync(db: WordRoomDatabase?) : AsyncTask<Void, Void, Void>() {
