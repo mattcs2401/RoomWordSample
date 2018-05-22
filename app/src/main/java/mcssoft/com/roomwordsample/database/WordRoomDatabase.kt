@@ -39,15 +39,13 @@ abstract class WordRoomDatabase : RoomDatabase() {
 
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
-                PopulateDB(INSTANCE)
+                // pre-populate database
+                val request: OneTimeWorkRequest = OneTimeWorkRequest.Builder(WordWorker::class.java).build()
+                val workMgr : WorkManager = WorkManager.getInstance()
+                return workMgr.enqueue(request)
+
             }
         }
-    }
-
-    private class PopulateDB(db: WordRoomDatabase?) {
-        val request: OneTimeWorkRequest = OneTimeWorkRequest.Builder(WordWorker::class.java).build()
-        val workMgr : WorkManager = WorkManager.getInstance()
-        val x = workMgr.enqueue(request)
     }
 
 }
