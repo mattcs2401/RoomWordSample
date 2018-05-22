@@ -6,13 +6,9 @@ import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import mcssoft.com.roomwordsample.entity.Word
 import mcssoft.com.roomwordsample.dao.WordDAO
-import android.os.AsyncTask.execute
 import android.arch.persistence.db.SupportSQLiteDatabase
-import android.support.annotation.NonNull
-import android.os.AsyncTask
 import androidx.work.*
-import androidx.work.ktx.OneTimeWorkRequestBuilder
-import mcssoft.com.roomwordsample.background.WordWorker
+import mcssoft.com.roomwordsample.background.InitWorker
 
 @Database(entities = arrayOf(Word::class), version = 1, exportSchema = false)
 abstract class WordRoomDatabase : RoomDatabase() {
@@ -40,7 +36,7 @@ abstract class WordRoomDatabase : RoomDatabase() {
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
                 // pre-populate database
-                val request: OneTimeWorkRequest = OneTimeWorkRequest.Builder(WordWorker::class.java).build()
+                val request: OneTimeWorkRequest = OneTimeWorkRequest.Builder(InitWorker::class.java).build()
                 val workMgr : WorkManager = WorkManager.getInstance()
                 return workMgr.enqueue(request)
 

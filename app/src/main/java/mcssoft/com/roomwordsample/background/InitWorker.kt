@@ -6,24 +6,24 @@ import mcssoft.com.roomwordsample.dao.WordDAO
 import mcssoft.com.roomwordsample.database.WordRoomDatabase
 import mcssoft.com.roomwordsample.entity.Word
 
-class WordWorker : Worker() {
+class InitWorker : Worker() {
 
     private val context : Context
+    private val wordDao : WordDAO
 
     init {
         context = getApplicationContext()
+        wordDao = WordRoomDatabase.getInstance(context)!!.wordDao()
     }
 
     override fun doWork(): WorkerResult {
 
-        val mDao = WordRoomDatabase.getInstance(context)?.wordDao()
-
-        if(mDao != null) {
-            mDao.deleteAll()
+        if(wordDao != null) {
+            wordDao.deleteAll()
             var word = Word("Hello")
-            mDao.insertWord(word)
+            wordDao.insertWord(word)
             word = Word("World")
-            mDao.insertWord(word)
+            wordDao.insertWord(word)
 
             return WorkerResult.SUCCESS
         }

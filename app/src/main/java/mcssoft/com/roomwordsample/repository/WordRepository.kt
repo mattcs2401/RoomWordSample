@@ -6,14 +6,19 @@ import mcssoft.com.roomwordsample.dao.WordDAO
 import mcssoft.com.roomwordsample.database.WordRoomDatabase
 import mcssoft.com.roomwordsample.entity.Word
 import android.os.AsyncTask
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import mcssoft.com.roomwordsample.background.InitWorker
+import mcssoft.com.roomwordsample.background.InsertWorker
 
 class WordRepository(application: Application) {
 
     private val wordDao: WordDAO
 
     init {
-        val db = WordRoomDatabase.getInstance(application)
-        wordDao = db!!.wordDao()
+//        val db = WordRoomDatabase.getInstance(application)
+        wordDao = WordRoomDatabase.getInstance(application)!!.wordDao()
     }
 
     private val allWords: LiveData<List<Word>> = wordDao.getAllWords()
@@ -21,15 +26,12 @@ class WordRepository(application: Application) {
     internal fun getAllWords(): LiveData<List<Word>> = allWords
 
     internal fun insert(word: Word) {
-        insertAsyncTask(wordDao).execute(word)
-    }
-
-    private class insertAsyncTask(val asyncTaskDao: WordDAO) : AsyncTask<Word, Void, Void>() {
-
-        override fun doInBackground(vararg params: Word): Void? {
-            asyncTaskDao.insertWord(params[0])
-            return null
-        }
+        val data : Data = Data.Builder().putString("key",word.word).build()
+        val request: OneTimeWorkRequest = OneTimeWorkRequest.Builder(InsertWorker::class.java)
+                .setInputData(data)
+                .build()
+        val workMgr : WorkManager = WorkManager.getInstance()
+        return workMgr.enqueue(request)
     }
 
 }
