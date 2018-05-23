@@ -1,6 +1,7 @@
 package mcssoft.com.roomwordsample.background
 
 import android.content.Context
+import android.util.Log
 import androidx.work.Worker
 import mcssoft.com.roomwordsample.dao.WordDAO
 import mcssoft.com.roomwordsample.database.WordRoomDatabase
@@ -8,22 +9,18 @@ import mcssoft.com.roomwordsample.entity.Word
 
 class InitWorker : Worker() {
 
-    private val context : Context
-    private val wordDao : WordDAO
-
-    init {
-        context = getApplicationContext()
-        wordDao = WordRoomDatabase.getInstance(context)!!.wordDao()
-    }
+    private var wordDao : WordDAO? = null
 
     override fun doWork(): WorkerResult {
 
+        wordDao = WordRoomDatabase.getInstance(applicationContext)!!.wordDao()
+
         if(wordDao != null) {
-            wordDao.deleteAll()
+            wordDao!!.deleteAll()
             var word = Word("Hello")
-            wordDao.insertWord(word)
+            wordDao!!.insertWord(word)
             word = Word("World")
-            wordDao.insertWord(word)
+            wordDao!!.insertWord(word)
 
             return WorkerResult.SUCCESS
         }

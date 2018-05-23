@@ -58,7 +58,7 @@ class MainActivityFragment : Fragment() {
             wordViewModel.insert(word)
         }
 
-        wordViewModel.getAllWords().observe(this, Observer<List<Word>> { words ->
+        wordViewModel.getAllWords().observe(this, Observer<MutableList<Word>> { words ->
             // Update the cached copy of the words in the wordListAdapter.
             if (words != null) {
                 wordListAdapter.setWords(words)
