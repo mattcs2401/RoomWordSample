@@ -14,7 +14,6 @@ class WordViewModel(application: Application) : AndroidViewModel(application) {
 
     init {
         wordRepository = WordRepository(application)
-        //allWords = wordRepository.getAllWords()
         allWords = getAllWords()
 
     }

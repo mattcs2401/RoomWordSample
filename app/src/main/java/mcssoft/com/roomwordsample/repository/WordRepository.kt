@@ -19,13 +19,10 @@ class WordRepository(application: Application) {
     private val wordDao: WordDAO
 
     init {
-//        val db = WordRoomDatabase.getInstance(application)
         wordDao = WordRoomDatabase.getInstance(application)!!.wordDao()
     }
 
-    private val allWords: LiveData<MutableList<Word>> = wordDao.getAllWords()
-
-    internal fun getAllWords(): LiveData<MutableList<Word>> = wordDao.getAllWords() //allWords
+    internal fun getAllWords(): LiveData<MutableList<Word>> = wordDao.getAllWords()
 
     internal fun insert(word: Word) {
         try {
