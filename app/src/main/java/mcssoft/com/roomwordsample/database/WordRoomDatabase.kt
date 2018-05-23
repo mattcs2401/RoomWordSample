@@ -7,7 +7,8 @@ import android.content.Context
 import mcssoft.com.roomwordsample.entity.Word
 import mcssoft.com.roomwordsample.dao.WordDAO
 import android.arch.persistence.db.SupportSQLiteDatabase
-import androidx.work.*
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import mcssoft.com.roomwordsample.background.InitWorker
 
 @Database(entities = arrayOf(Word::class), version = 1, exportSchema = false)
