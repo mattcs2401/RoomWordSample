@@ -9,16 +9,13 @@ import android.widget.EditText
 import mcssoft.com.roomwordsample.R
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
-import android.content.Context
 import android.text.TextUtils
 import android.content.Intent
-import android.view.ViewGroup.inflate
 import android.widget.Button
-import kotlinx.android.synthetic.main.fragment_new.*
 
 class NewActivityFragment : Fragment() {
 
-    lateinit private var editWordView: EditText
+    lateinit private var editText: EditText
     lateinit private var rootView: View
     lateinit private var button: Button
 
@@ -30,7 +27,7 @@ class NewActivityFragment : Fragment() {
         rootView =  inflater.inflate(R.layout.fragment_new, container, false)
 
         button = rootView.findViewById<Button>(R.id.button_save)
-        editWordView = rootView.findViewById(R.id.edit_word)
+        editText = rootView.findViewById(R.id.edit_word)
 
         return rootView
     }
@@ -40,11 +37,11 @@ class NewActivityFragment : Fragment() {
 
         button.setOnClickListener(View.OnClickListener {
             val replyIntent = Intent()
-            if (TextUtils.isEmpty(editWordView.getText())) {
+            if (TextUtils.isEmpty(editText.getText())) {
                 activity!!.setResult(RESULT_CANCELED, replyIntent)
             } else {
-                val word = editWordView.getText().toString()
-                replyIntent.putExtra(EXTRA_REPLY, word)
+                //val word = editText.getText().toString()
+                replyIntent.putExtra(EXTRA_REPLY, editText.getText().toString()) //word
                 activity!!.setResult(RESULT_OK, replyIntent)
             }
             activity!!.finish()

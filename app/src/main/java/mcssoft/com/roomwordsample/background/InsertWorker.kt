@@ -17,8 +17,7 @@ class InsertWorker : Worker() {
 
         if(wordDao != null) {
             val theWord : String = getInputData().getString("key", "key")
-            var word : Word = Word(theWord)
-            wordDao!!.insertWord(word)
+            wordDao!!.insertWord(Word(theWord))
 
             return WorkerResult.SUCCESS
         }

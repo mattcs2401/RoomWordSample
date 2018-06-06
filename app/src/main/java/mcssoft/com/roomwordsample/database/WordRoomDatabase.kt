@@ -25,6 +25,7 @@ abstract class WordRoomDatabase : RoomDatabase() {
                 synchronized(WordRoomDatabase::class) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             WordRoomDatabase::class.java, "Words.db")
+
                             .addCallback(roomDatabaseCallback)
                             .build()
                 }
