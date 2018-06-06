@@ -25,23 +25,20 @@ abstract class WordRoomDatabase : RoomDatabase() {
                 synchronized(WordRoomDatabase::class) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             WordRoomDatabase::class.java, "Words.db")
-
-                            .addCallback(roomDatabaseCallback)
+                            .addCallback(callback)
                             .build()
                 }
             }
             return INSTANCE
         }
 
-        private val roomDatabaseCallback = object : RoomDatabase.Callback() {
-
+        private val callback = object : RoomDatabase.Callback() {
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
                 // pre-populate database
                 val request: OneTimeWorkRequest = OneTimeWorkRequest.Builder(InitWorker::class.java).build()
                 val workMgr : WorkManager = WorkManager.getInstance()
                 return workMgr.enqueue(request)
-
             }
         }
     }
